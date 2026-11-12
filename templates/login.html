@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Admin login | EmailNest{% endblock %}
+{% block content %}
+<section class="panel narrow">
+  <div class="eyebrow">PRIVATE AREA</div>
+  <h1>Admin login</h1>
+  <p class="muted">Enter the admin password configured on your server.</p>
+  <form method="post" class="stack">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label for="password">Admin password</label>
+    <input id="password" name="password" type="password" required autocomplete="current-password">
+    <button type="submit">Sign in</button>
+  </form>
+  <a class="back-link" href="{{ url_for('index') }}">← Back to home</a>
+</section>
+{% endblock %}

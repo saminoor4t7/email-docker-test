@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Subscribers | EmailNest{% endblock %}
+{% block content %}
+<section class="panel">
+  <div class="admin-heading">
+    <div>
+      <div class="eyebrow">DASHBOARD</div>
+      <h1>Subscribers</h1>
+      <p class="muted">{{ subscribers|length }} email address(es)</p>
+    </div>
+    <form method="post" action="{{ url_for('admin_logout') }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <button class="secondary" type="submit">Sign out</button>
+    </form>
+  </div>
+  {% if subscribers %}
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Email</th><th>Added</th><th>Action</th></tr></thead>
+      <tbody>
+      {% for item in subscribers %}
+        <tr>
+          <td>{{ item.email }}</td>
+          <td>{{ item.created_at }}</td>
+          <td>
+            <form method="post" action="{{ url_for('delete_subscriber', subscriber_id=item.id) }}"
+                  onsubmit="return confirm('Delete this email?');">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+              <button class="danger" type="submit">Delete</button>
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+    <div class="empty">No subscribers yet. Add an email from the home page to see it here.</div>
+  {% endif %}
+</section>
+{% endblock %}
